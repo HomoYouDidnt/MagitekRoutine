@@ -12972,6 +12972,15 @@ namespace Magitek.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prioritize Sacred Soil over Succor (use the instant oGCD before casting shields).
+        /// </summary>
+        public static string Scholar_Content_Prioritize_Sacred_Soil_over_Succor {
+            get {
+                return ResourceManager.GetString("Scholar_Content_Prioritize_Sacred_Soil_over_Succor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emergency Tactics.
         /// </summary>
         public static string Scholar_Content_Emergency_Tactics {

@@ -212,6 +212,10 @@ namespace Magitek.Models.Scholar
         public bool SacredSoilCenterParty { get; set; }
 
         [Setting]
+        [DefaultValue(false)]
+        public bool PrioritizeSacredSoilOverSuccor { get; set; }
+
+        [Setting]
         [DefaultValue(true)]
         public bool Indomitability { get; set; }
 
