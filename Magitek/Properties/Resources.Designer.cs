@@ -12972,6 +12972,15 @@ namespace Magitek.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Swiftcast to create a Deployment Tactics shield when the raidwide lands too soon to cast one.
+        /// </summary>
+        public static string Scholar_Content_Swiftcast_Deploy_Carrier {
+            get {
+                return ResourceManager.GetString("Scholar_Content_Swiftcast_Deploy_Carrier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prioritize Sacred Soil over Succor (use the instant oGCD before casting shields).
         /// </summary>
         public static string Scholar_Content_Prioritize_Sacred_Soil_over_Succor {

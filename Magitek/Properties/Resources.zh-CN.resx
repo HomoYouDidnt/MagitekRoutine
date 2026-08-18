@@ -3261,6 +3261,9 @@
   <data name="Scholar_Content_Place_Sacred_Soil_on_the_party_mem" xml:space="preserve">
     <value>将野战治疗阵放置在离全队中心最近的成员身上。</value>
   </data>
+  <data name="Scholar_Content_Swiftcast_Deploy_Carrier" xml:space="preserve">
+    <value>当团体攻击来不及吟唱时，使用即刻咏唱制造展开战术的护盾</value>
+  </data>
   <data name="Scholar_Content_Prioritize_Sacred_Soil_over_Succor" xml:space="preserve">
     <value>优先使用野战治疗阵，再考虑士气高扬之策（先用瞬发能力技）</value>
   </data>

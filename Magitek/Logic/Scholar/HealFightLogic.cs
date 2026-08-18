@@ -121,6 +121,25 @@ namespace Magitek.Logic.Scholar
                 && Spells.Succor.IsKnownAndReady()
                 && (!enemyCasting || enemyTarget.SpellCastInfo.RemainingCastTime > Spells.Succor.AdjustedCastTime);
 
+            // Swiftcast rescue for the Recitation carrier combo below. That combo is refused whenever
+            // Adloquium cannot be cast — while moving, or when the mechanic lands sooner than its cast
+            // time — which accounted for 16 of 60 logged declines across a night of field content.
+            // Swiftcast makes that Adloquium instant and turns the decline into a full Deploy.
+            //
+            // Deliberately narrow, because this spends the healer's resurrection insurance:
+            //  - only when the combo would ALREADY be declined, never to shave time off one that lands
+            //    anyway (a 60s cooldown is not worth ~1.4s);
+            //  - never when the cast is already instant. AdjustedCastTime reflects Dualcast (measured:
+            //    it reads 0 while the aura is up, so a phantom Red Mage gets this for free) and
+            //    Seraphism's masked instants, and Swiftcast would buy nothing in either case;
+            //  - never while a raisable corpse is up, where the raise has the stronger claim on it.
+            bool swiftcastRescue = !canCastShield
+                && ScholarSettings.Instance.FightLogicSwiftcastDeployCarrier
+                && Spells.Swiftcast.IsKnownAndReady()
+                && !Core.Me.HasAura(Auras.Swiftcast)
+                && ScholarRoutine.AdloquiumSpell.AdjustedCastTime > TimeSpan.Zero
+                && !Group.DeadAllies.Any();
+
             // Instant, castable while moving, no cast window required.
             async Task<bool> TrySacredSoil()
             {
@@ -202,7 +221,7 @@ namespace Magitek.Logic.Scholar
             // cast the Soil-first preference exists to avoid. Spreading an EXISTING shield above stays
             // ahead of Soil (it's instant and stronger); only this self-build path yields — and only
             // this half needs the cast window (canCastShield), since the copy above is instant.
-            if (canCastShield &&
+            if ((canCastShield || swiftcastRescue) &&
                 ScholarSettings.Instance.FightLogicAdloDeployBigAoe &&
                 Spells.DeploymentTactics.IsKnownAndReady() &&
                 !ScholarSettings.Instance.PrioritizeSacredSoilOverSuccor)
@@ -224,6 +243,15 @@ namespace Magitek.Logic.Scholar
                     && !Core.Me.HasAura(Auras.Seraphism))
                 {
                     SpellQueueLogic.SpellQueueReset(() => SpellQueueLogic.Timeout.ElapsedMilliseconds > 8000);
+
+                    // First in the queue so the Adloquium two entries down is already instant when it
+                    // runs. Both this and Recitation are oGCDs, so they weave ahead of that GCD.
+                    if (swiftcastRescue)
+                        SpellQueueLogic.SpellQueue.Enqueue(new QueueSpell
+                        {
+                            Spell = Spells.Swiftcast,
+                            TargetSelf = true
+                        });
 
                     SpellQueueLogic.SpellQueue.Enqueue(new QueueSpell
                     {

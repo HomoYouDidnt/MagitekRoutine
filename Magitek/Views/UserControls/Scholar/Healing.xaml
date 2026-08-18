@@ -252,7 +252,10 @@
         </controls:SettingsBlock>        
 
         <controls:SettingsBlock Margin="0,5,0,0" Background="{DynamicResource ClassSelectorBackground}">
-            <CheckBox Margin="5" Content="{x:Static properties:Resources.Scholar_Content_Prioritize_Sacred_Soil_over_Succor}" IsChecked="{Binding ScholarSettings.PrioritizeSacredSoilOverSuccor, Mode=TwoWay}" Style="{DynamicResource CheckBoxFlat}" />
+            <StackPanel Margin="5">
+                <CheckBox Content="{x:Static properties:Resources.Scholar_Content_Prioritize_Sacred_Soil_over_Succor}" IsChecked="{Binding ScholarSettings.PrioritizeSacredSoilOverSuccor, Mode=TwoWay}" Style="{DynamicResource CheckBoxFlat}" />
+                <CheckBox Margin="0,5,0,0" Content="{x:Static properties:Resources.Scholar_Content_Swiftcast_Deploy_Carrier}" IsChecked="{Binding ScholarSettings.FightLogicSwiftcastDeployCarrier, Mode=TwoWay}" Style="{DynamicResource CheckBoxFlat}" />
+            </StackPanel>
         </controls:SettingsBlock>
         </StackPanel>
     </ScrollViewer>

@@ -3260,6 +3260,9 @@ Does not work if Lightspeed is disabled.</value>
   <data name="Scholar_Content_Place_Sacred_Soil_on_the_party_mem" xml:space="preserve">
     <value>Place Sacred Soil on the party member closest to the center of the whole party.</value>
   </data>
+  <data name="Scholar_Content_Swiftcast_Deploy_Carrier" xml:space="preserve">
+    <value>Use Swiftcast to create a Deployment Tactics shield when the raidwide lands too soon to cast one</value>
+  </data>
   <data name="Scholar_Content_Prioritize_Sacred_Soil_over_Succor" xml:space="preserve">
     <value>Prioritize Sacred Soil over Succor (use the instant oGCD before casting shields)</value>
   </data>
