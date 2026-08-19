@@ -1928,6 +1928,36 @@ namespace Magitek.Utilities
                 Expansion = FfxivExpansion.Stormblood,
                 Enemies = new List<Enemy> {
                     new Enemy {
+                        Id = 5640,
+                        Name = "Shinryu",
+                        TankBusters = null,
+                        SharedTankBusters = null,
+                        Aoes = new List<uint>() {
+                            // Corrupted Aether raidwides. Each has two cast ids fired together: one
+                            // carries the geometry and the damage, the other is a self-targeted entry
+                            // with the same cast time and no effect. Both are listed because either
+                            // may be the one on the cast bar, and an id that never matches is inert.
+                            8077, // Judgment Bolt
+                            8108, // Judgment Bolt — paired cast id
+                            8078, // Diamond Dust
+                            8109, // Diamond Dust — paired cast id
+                            8085, // Protostar
+                            8180, // Gyre Charge — the wide line charge. The duty guide's advice is
+                                  // "get clear entirely or soak the hit", so the party eats it often.
+                            8100, // Akh Morn — a stack, not a tank buster: the action is a 4y circle
+                                  // centred on a player (cast type 6, radius 4) and applies in several
+                                  // strikes. Shinryu's other Akh Morn is a non-tracking beam that is
+                                  // dodged rather than mitigated, and is deliberately not listed.
+                        },
+                        Knockbacks = new List<uint>() {
+                            8075, // Tidal Wave — pushes the party off the platform, and falling is
+                            8106, // instantly fatal. The duty guide states the knockback is prevented
+                                  // by Arm's Length or Surecast, so this belongs here rather than in
+                                  // Aoes despite also dealing ~33% party-wide.
+                        },
+                        BigAoes = null
+                    },
+                    new Enemy {
                         Id = 5641,
                         Name = "Shinryu: Left Wing",
                         TankBusters = null,
@@ -1936,7 +1966,42 @@ namespace Magitek.Utilities
                             8098 //Ice Storm
                         },
                         BigAoes = null
-                    }
+                    },
+                    new Enemy {
+                        Id = 5642,
+                        Name = "Shinryu: Right Wing",
+                        TankBusters = null,
+                        SharedTankBusters = null,
+                        Aoes = new List<uint>() {
+                            8089, // Hypernova
+                            8091, // Levinbolt — marks several players at once. Spreading stops the
+                                  // circles overlapping but nobody avoids their own, so the party
+                                  // takes it regardless.
+                        },
+                        BigAoes = null
+                    },
+                    new Enemy {
+                        Id = 6275,
+                        Name = "Cocoon",
+                        TankBusters = null,
+                        SharedTankBusters = null,
+                        Aoes = new List<uint>() {
+                            9291, // Meteor Impact — proximity-scaled, so distance reduces it, but it
+                            8086, // landed on all eight members on every one of 12 casts in the
+                                  // observed run and was the heaviest hit in the fight.
+                        },
+                        BigAoes = null
+                    },
+                    new Enemy {
+                        Id = 6273,
+                        Name = "Hakkinryu",
+                        TankBusters = new List<uint>() {
+                            8731, // Death Sentence — untelegraphed tank buster on the phase 2 adds.
+                        },
+                        SharedTankBusters = null,
+                        Aoes = null,
+                        BigAoes = null
+                    },
                 }
             },
             new Encounter {
