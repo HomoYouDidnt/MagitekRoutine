@@ -39,10 +39,10 @@ namespace Magitek.Logic.Scholar
 
                     // Both barriers are wasted on someone who already has one — they replace rather than
                     // stack, so the cast buys nothing but a refreshed timer.
-                    if (ScholarSettings.Instance.FightLogicAdloDeployBigAoe && Spells.Adloquium.IsKnownAndReady() && !Core.Me.HasMagicBarrier())
+                    if (ScholarSettings.Instance.FightLogicAdloDeployBigAoe && Spells.Adloquium.IsKnownAndReady() && !Core.Me.HasPrimaryShield())
                         return await FightLogic.DoAndBuffer(ScholarRoutine.AdloquiumSpell.Cast(Core.Me));
 
-                    if (ScholarSettings.Instance.FightLogicSuccorAoe && Spells.Succor.IsKnownAndReady() && !Core.Me.HasMagicBarrier())
+                    if (ScholarSettings.Instance.FightLogicSuccorAoe && Spells.Succor.IsKnownAndReady() && !Core.Me.HasPrimaryShield())
                         return await FightLogic.DoAndBuffer(ScholarRoutine.SuccorSpell.Cast(Core.Me));
 
                     return false;
@@ -93,7 +93,7 @@ namespace Magitek.Logic.Scholar
                 + $"remainMs={remainMs} succorCastMs={(int)Spells.Succor.AdjustedCastTime.TotalMilliseconds} "
                 + $"seraphism={Core.Me.HasAura(Auras.Seraphism)} et={Core.Me.HasAura(Auras.EmergencyTactics)} "
                 + $"queueLive={SpellQueueLogic.SpellQueue.Any()} "
-                + $"barriered={Group.CastableParty.Count(x => x.HasMagicBarrier())}/{AoeThreshold} "
+                + $"barriered={Group.CastableParty.Count(x => x.HasPrimaryShield())}/{AoeThreshold} "
                 + $"galvanizeCarrier={Group.CastableParty.Any(x => x.HasAura(Auras.Galvanize, true))}");
         }
 
@@ -323,7 +323,7 @@ namespace Magitek.Logic.Scholar
                 // Skipped under Seraphism: Recitation does not interact with the masked Accession,
                 // and the plain shield path below casts the masked instant directly.
                 !Core.Me.HasAura(Auras.Seraphism) &&
-                Group.CastableParty.Count(x => x.HasMagicBarrier()) < AoeThreshold)
+                Group.CastableParty.Count(x => x.HasPrimaryShield()) < AoeThreshold)
             {
                 if (BaseSettings.Instance.DebugFightLogic)
                     Logger.WriteInfo($"[AOE Response] Queued Recitation > Succor");
@@ -367,7 +367,7 @@ namespace Magitek.Logic.Scholar
             if (canCastShield &&
                 ScholarSettings.Instance.FightLogicSuccorAoe &&
                 Spells.Succor.IsKnownAndReady() &&
-                Group.CastableParty.Count(x => x.HasMagicBarrier()) < AoeThreshold)
+                Group.CastableParty.Count(x => x.HasPrimaryShield()) < AoeThreshold)
             {
                 if (BaseSettings.Instance.DebugFightLogic)
                     Logger.WriteInfo($"[AOE Response] Cast Succor");
